@@ -1,0 +1,29 @@
+PODS:
+  - ReactiveCocoa (2.5):
+    - ReactiveCocoa/UI (= 2.5)
+  - ReactiveCocoa/Core (2.5):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.5)
+  - ReactiveCocoa/UI (2.5):
+    - ReactiveCocoa/Core
+  - ZTCameraKit (0.1.0):
+    - ReactiveCocoa (~> 2.5)
+
+DEPENDENCIES:
+  - ZTCameraKit (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ReactiveCocoa
+
+EXTERNAL SOURCES:
+  ZTCameraKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
+  ZTCameraKit: 6ca9404fab4494ff4c578ec30e2612b36cf16ec0
+
+PODFILE CHECKSUM: 00583adf8ca02616fa1086d254770c9716435171
+
+COCOAPODS: 1.5.3

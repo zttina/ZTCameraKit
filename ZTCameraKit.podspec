@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'ZTCameraKit'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of ZTCameraKit.'
+  s.summary          = '自定义相机相册'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,20 +18,22 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+加一个长的描述~自定义相机相册.
                        DESC
 
-  s.homepage         = 'https://github.com/hfzdeyx@163.com/ZTCameraKit'
+  s.homepage         = 'https://github.com/zttina/ZTCameraKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'hfzdeyx@163.com' => '351199191.com' }
-  s.source           = { :git => 'https://github.com/hfzdeyx@163.com/ZTCameraKit.git', :tag => s.version.to_s }
+  s.author           = { 'zttina' => '351199191@qq.com' }
+  s.source           = { :git => 'https://github.com/zttina/ZTCameraKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'ZTCameraKit/Classes/**/*'
   
+  s.dependency 'ReactiveCocoa','~> 2.5'
+
   # s.resource_bundles = {
   #   'ZTCameraKit' => ['ZTCameraKit/Assets/*.png']
   # }
