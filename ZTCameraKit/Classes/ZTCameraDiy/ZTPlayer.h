@@ -1,16 +1,16 @@
 //
-//  DAPlayer.h
-//  TechnicianApp
+//  ZTPlayer.h
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/15.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/15.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DAPlayer : UIView
+@interface ZTPlayer : UIView
 
 @property (nonatomic, strong) NSURL *videoUrl;
 

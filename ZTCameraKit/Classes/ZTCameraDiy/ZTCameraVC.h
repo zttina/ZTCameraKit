@@ -1,9 +1,9 @@
 //
-//  DACameraVC.h
-//  TechnicianApp
+//  ZTCameraVC.h
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/15.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/15.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -13,8 +13,7 @@ typedef void(^ReturnVideoURL)(NSURL *videoUrl);
 typedef void(^ReturnImage)(UIImage *image);
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DACameraVC : UIViewController
-
+@interface ZTCameraVC : UIViewController
 
 /**
  选择照片时的block

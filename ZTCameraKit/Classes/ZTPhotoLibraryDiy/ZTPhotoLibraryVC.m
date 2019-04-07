@@ -1,24 +1,24 @@
 //
-//  DAPhotoLibraryVC.m
-//  TechnicianApp
+//  ZTPhotoLibraryVC.m
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/22.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/22.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
-#import "DAPhotoLibraryVC.h"
-#import "DAPhotoUtil.h"
-#import "DAPhotoAssetVC.h"
+#import "ZTPhotoLibraryVC.h"
+#import "ZTPhotoUtil.h"
+#import "ZTPhotoAssetVC.h"
 #define RowHeight 60.f
 
-@interface DAPhotoLibraryVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface ZTPhotoLibraryVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) NSMutableArray *photoAlbums;//存相册的数组
-@property (nonatomic,strong) DAPhotoAlbums *selectPhotoAlbum;//当前选择的相册
+@property (nonatomic,strong) ZTPhotoAlbums *selectPhotoAlbum;//当前选择的相册
 @property (nonatomic,strong) UITableView *tableView;//相册列表
 @end
 
-@implementation DAPhotoLibraryVC
+@implementation ZTPhotoLibraryVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,10 +72,10 @@
         if (collection.assetCollectionSubtype != PHAssetCollectionSubtypeSmartAlbumAllHidden &&
             collection.assetCollectionSubtype != 1000000201 &&
             collection.assetCollectionSubtype != PHAssetCollectionSubtypeSmartAlbumVideos) {
-            NSArray<PHAsset *> *assets = [DAPhotoUtil getAllAssetWithAssetCollection:collection ascending:YES];
+            NSArray<PHAsset *> *assets = [ZTPhotoUtil getAllAssetWithAssetCollection:collection ascending:YES];
             //不显示空相册
             if ([assets count]) {
-                DAPhotoAlbums *album = [[DAPhotoAlbums alloc] init];
+                ZTPhotoAlbums *album = [[ZTPhotoAlbums alloc] init];
                 album.name = collection.localizedTitle;
                 album.assetCount = assets.count;
                 album.collection = collection;
@@ -94,9 +94,9 @@
     // 获取用户创建相册
     PHFetchResult * userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary options:nil];
     [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSArray<PHAsset *> * assets = [DAPhotoUtil getAllAssetWithAssetCollection:collection ascending:NO];
+        NSArray<PHAsset *> * assets = [ZTPhotoUtil getAllAssetWithAssetCollection:collection ascending:NO];
         if (assets.count > 0) {
-            DAPhotoAlbums * album = [[DAPhotoAlbums alloc] init];
+            ZTPhotoAlbums * album = [[ZTPhotoAlbums alloc] init];
             album.name = collection.localizedTitle;
             album.assetCount = assets.count;
             album.coverAsset = assets.firstObject;
@@ -160,24 +160,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * CellIdentifier = @"Cell";
-    DAPhotoAlbumCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ZTPhotoAlbumCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[DAPhotoAlbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ZTPhotoAlbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     cell.libraryNameLabel.textColor = [UIColor grayColor];
     // 封面
-    DAPhotoAlbums * album = [self.photoAlbums objectAtIndex:indexPath.row];
+    ZTPhotoAlbums * album = [self.photoAlbums objectAtIndex:indexPath.row];
     if (album.coverAsset) {
         @weakify(cell);
-        [DAPhotoUtil getImageWithAsset:album.coverAsset size:CGSizeMake(RowHeight, RowHeight) completion:^(UIImage * _Nonnull image) {
+        [ZTPhotoUtil getImageWithAsset:album.coverAsset size:CGSizeMake(RowHeight, RowHeight) completion:^(UIImage * _Nonnull image) {
             @strongify(cell);
             cell.iconImageView.image = image;
 
         }];
     } else {
-        cell.iconImageView.image = [UIImage imageNamed:@"mmphoto_empty"];
+        cell.iconImageView.image = [UIImage imageNamed:@""];
     }
     // 数量
     NSString * text = [NSString stringWithFormat:@"%@  (%ld)",album.name, (long)album.assetCount];
@@ -203,15 +203,15 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // 跳转
-    DAPhotoAlbums *photoAlbum = [self.photoAlbums objectAtIndex:indexPath.row];
+    ZTPhotoAlbums *photoAlbum = [self.photoAlbums objectAtIndex:indexPath.row];
     [self pushAlbumByPhotoAlbum:photoAlbum animated:YES];
 }
 
 #pragma mark - 跳转
-- (void)pushAlbumByPhotoAlbum:(DAPhotoAlbums *)photoAlbum animated:(BOOL)animated
+- (void)pushAlbumByPhotoAlbum:(ZTPhotoAlbums *)photoAlbum animated:(BOOL)animated
 {
     
-    DAPhotoAssetVC *assetVC = [DAPhotoAssetVC new];
+    ZTPhotoAssetVC *assetVC = [ZTPhotoAssetVC new];
     assetVC.photoAlbum = photoAlbum;
     @weakify(self);
     assetVC.imageBlock = ^(UIImage *image) {
@@ -228,11 +228,11 @@
 @end
 
 //MARK:相册
-@implementation DAPhotoAlbums
+@implementation ZTPhotoAlbums
 
 @end
-#pragma mark - ################## DAPhotoAlbumCell
-@implementation DAPhotoAlbumCell
+#pragma mark - ################## ZTPhotoAlbumCell
+@implementation ZTPhotoAlbumCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     

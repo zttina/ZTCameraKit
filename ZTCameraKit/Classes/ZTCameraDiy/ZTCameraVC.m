@@ -1,17 +1,17 @@
 //
-//  DACameraVC.m
-//  TechnicianApp
+//  ZTCameraVC.m
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/15.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/15.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
-#import "DACameraVC.h"
+#import "ZTCameraVC.h"
 #import <AVFoundation/AVFoundation.h>
 //#import <Photos/Photos.h>
 //视频播放器
-#import "DAPlayer.h"
-#import "DAPhotoLibraryVC.h"
+#import "ZTPlayer.h"
+#import "ZTPhotoLibraryVC.h"
 #import "ZTCameraKitHeader.h"
 #define kInnerViewScale .4//外圈大小
 #define kOuterViewScale .6//外圈大小
@@ -24,7 +24,7 @@ typedef void(^FinishVideo)(void);
 typedef void(^SelectPhoto)(void);
 typedef void(^ShowLibrary)(void);
 
-@interface DACameraToolView : UIView<CAAnimationDelegate>
+@interface ZTCameraToolView : UIView<CAAnimationDelegate>
 //MARK:block操作
 @property (nonatomic,copy) DismissPhoto dismissBlock;//取消这个vc页面
 @property (nonatomic,copy) TakePhoto takePhotoBlock;//拍照
@@ -50,7 +50,7 @@ typedef void(^ShowLibrary)(void);
 - (void)startAnimate;
 @end
 
-@implementation DACameraToolView
+@implementation ZTCameraToolView
 //MARK:初始化方法
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -83,17 +83,24 @@ typedef void(^ShowLibrary)(void);
 //MARK:创建UI
 - (void)setUI {
     
+    NSString *bundlePath = [[NSBundle bundleForClass:NSClassFromString(@"ZTCameraKit")].resourcePath stringByAppendingPathComponent:@"ZTCameraKit.bundle"];
+    
+//    NSURL *url = [NSBundle bundleForClass:NSClassFromString(@"ZTCameraKit")].resourceURL;
+    
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    
+    // 直接访问路径
     CGFloat innerW = self.frame.size.height * kInnerViewScale;
     CGFloat outterW = self.frame.size.height * kOuterViewScale;
 
     self.dismissBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.dismissBtn.frame = CGRectMake(60, self.bounds.size.height/2-25/2, 25, 25);
-    [self.dismissBtn setImage:[UIImage imageNamed:@"arrow_down"] forState:UIControlStateNormal];
+    [self.dismissBtn setImage:[UIImage imageNamed:@"arrow_down" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self addSubview:self.dismissBtn];
     
     self.cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.cancelBtn.frame = CGRectMake((ZTSCREENW - 35*2 - 80)/2.0, self.bounds.size.height/2-35/2, 35, 35);
-    [self.cancelBtn setImage:[UIImage imageNamed:@"retake"] forState:UIControlStateNormal];
+    [self.cancelBtn setImage:[UIImage imageNamed:@"retake" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self addSubview:self.cancelBtn];
     self.cancelBtn.hidden = YES;
     self.cancelBtn.layer.cornerRadius = 35/2.0;
@@ -102,7 +109,7 @@ typedef void(^ShowLibrary)(void);
 
     self.okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.okBtn.frame = CGRectMake(ZTSCREENW - (ZTSCREENW - 35*2 - 80)/2.0 - 35, self.bounds.size.height/2-35/2, 35, 35);
-    [self.okBtn setImage:[UIImage imageNamed:@"takeok"] forState:UIControlStateNormal];
+    [self.okBtn setImage:[UIImage imageNamed:@"takeok" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     [self addSubview:self.okBtn];
     self.okBtn.layer.cornerRadius = 35/2.0;
     self.okBtn.layer.masksToBounds = YES;
@@ -125,11 +132,12 @@ typedef void(^ShowLibrary)(void);
     self.libraryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:self.libraryBtn];
     self.libraryBtn.frame = CGRectMake(ZTSCREENW - 60 - 30, self.bounds.size.height/2-30/2, 30, 30);
-    [self.libraryBtn setImage:[UIImage imageNamed:@"library"] forState:UIControlStateNormal];
+    [self.libraryBtn setImage:[UIImage imageNamed:@"library" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     
     [self addEvents];
 
 }
+
 //MARK:button点击事件
 - (void)addEvents {
     [self.dismissBtn addTarget:self action:@selector(dismissVC) forControlEvents:UIControlEventTouchUpInside];
@@ -271,10 +279,10 @@ typedef void(^ShowLibrary)(void);
 }
 @end
 
-@interface DACameraVC ()<AVCaptureFileOutputRecordingDelegate>
+@interface ZTCameraVC ()<AVCaptureFileOutputRecordingDelegate>
 
 //底下的，拍照，确认，取消，相册，退出按钮view
-@property (nonatomic,strong) DACameraToolView *toolView;
+@property (nonatomic,strong) ZTCameraToolView *toolView;
 //AVCaptureSession对象来执行输入设备和输出设备之间的数据传递
 @property (nonatomic,strong) AVCaptureSession *captureSession;
 //AVCaptureDeviceInput对象是输入流
@@ -290,7 +298,7 @@ typedef void(^ShowLibrary)(void);
 //拍的照片
 @property (nonatomic,strong) UIImage *takeImageData;
 //视频播放器
-@property (nonatomic,strong) DAPlayer *playerView;
+@property (nonatomic,strong) ZTPlayer *playerView;
 //录制视频保存的url
 @property (nonatomic, strong) NSURL *videoUrl;
 
@@ -301,7 +309,7 @@ typedef void(^ShowLibrary)(void);
 
 @end
 
-@implementation DACameraVC
+@implementation ZTCameraVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -313,7 +321,7 @@ typedef void(^ShowLibrary)(void);
     
 }
 - (void)setUI {
-    self.toolView = [[DACameraToolView alloc]initWithFrame:CGRectMake(0, ZTSCREENH - (ZT_TAB_BAR_HEIGHT - 49) - 130, ZTSCREENW, 130) allowVideo:self.allowVideo];
+    self.toolView = [[ZTCameraToolView alloc]initWithFrame:CGRectMake(0, ZTSCREENH - (ZT_TAB_BAR_HEIGHT - 49) - 130, ZTSCREENW, 130) allowVideo:self.allowVideo];
     [self.view addSubview:self.toolView];
     
     @weakify(self);
@@ -379,7 +387,7 @@ typedef void(^ShowLibrary)(void);
     self.toolView.showLibraryBlock = ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            DAPhotoLibraryVC *libraryVC = [DAPhotoLibraryVC new];
+            ZTPhotoLibraryVC *libraryVC = [ZTPhotoLibraryVC new];
             UINavigationController *navc = [[UINavigationController alloc]initWithRootViewController:libraryVC];
             @weakify(navc);
             libraryVC.imageBlock = ^(UIImage * _Nonnull image) {
@@ -484,7 +492,7 @@ typedef void(^ShowLibrary)(void);
 //MARK:播放视频
 - (void)playVideo {
     if (!_playerView) {
-        self.playerView = [[DAPlayer alloc] initWithFrame:self.view.bounds];
+        self.playerView = [[ZTPlayer alloc] initWithFrame:self.view.bounds];
         [self.view insertSubview:self.playerView belowSubview:self.toolView];
     }
     self.playerView.videoUrl = self.videoUrl;

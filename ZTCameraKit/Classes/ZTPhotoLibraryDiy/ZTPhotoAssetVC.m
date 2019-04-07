@@ -1,17 +1,17 @@
 //
-//  DAPhotoAssetVC.m
-//  TechnicianApp
+//  ZTPhotoAssetVC.m
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/23.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/23.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
-#import "DAPhotoAssetVC.h"
-#import "DAPhotoLibraryVC.h"
-#import "DAPhotoUtil.h"
-#import "DAPhotoPreviewVC.h"
+#import "ZTPhotoAssetVC.h"
+#import "ZTPhotoLibraryVC.h"
+#import "ZTPhotoUtil.h"
+#import "ZTPhotoPreviewVC.h"
 #import "ZTCameraKitHeader.h"
-@interface DAPhotoAssetVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface ZTPhotoAssetVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView * collectionView;//相册的collectionView
 @property (nonatomic,strong) NSMutableArray *phAssetArray;//图片数组
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation DAPhotoAssetVC
+@implementation ZTPhotoAssetVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,7 +39,7 @@
     [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         PHAsset * asset = (PHAsset *)obj;
         if (asset.mediaType == PHAssetMediaTypeImage) {
-            DAPHAsset * daAsset = [[DAPHAsset alloc] init];
+            ZTPHAsset * daAsset = [[ZTPHAsset alloc] init];
             daAsset.asset = asset;
             daAsset.isSelected = NO;
             [self.phAssetArray addObject:daAsset];
@@ -63,9 +63,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DAPHAsset * mmAsset = [self.phAssetArray objectAtIndex:indexPath.row];
+    ZTPHAsset * mmAsset = [self.phAssetArray objectAtIndex:indexPath.row];
     // 赋值
-    DAPHAssetCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    ZTPHAssetCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     [cell configWithAsset:mmAsset.asset isCover:YES];
     cell.selected = mmAsset.isSelected;
     return cell;
@@ -75,9 +75,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-//    DAPHAsset * mmAsset = [self.phAssetArray objectAtIndex:indexPath.row];
-//    PHAsset * asset = mmAsset.asset;
-    DAPhotoPreviewVC *previewVC = [[DAPhotoPreviewVC alloc]init];
+    ZTPhotoPreviewVC *previewVC = [[ZTPhotoPreviewVC alloc]init];
     previewVC.assetArray = self.phAssetArray;
     previewVC.currentIndex = indexPath.item;
     previewVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -197,7 +195,7 @@
     NSMutableArray *assets = [NSMutableArray arrayWithCapacity:indexPaths.count];
     for (NSIndexPath *indexPath in indexPaths) {
         if (indexPath.item < self.phAssetArray.count && indexPath.item != 0) {
-            DAPHAsset *asset = self.phAssetArray[self.phAssetArray.count-indexPath.item];
+            ZTPHAsset *asset = self.phAssetArray[self.phAssetArray.count-indexPath.item];
             [assets addObject:asset.asset];
         }
     }
@@ -223,7 +221,7 @@
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.scrollEnabled = YES;
-        [_collectionView registerClass:[DAPHAssetCell class] forCellWithReuseIdentifier:@"cell"];
+        [_collectionView registerClass:[ZTPHAssetCell class] forCellWithReuseIdentifier:@"cell"];
     }
     return _collectionView;
 }
@@ -237,16 +235,16 @@
 }
 @end
 
-#pragma mark - ################## DAPHAsset
-@implementation DAPHAsset
+#pragma mark - ################## ZTPHAsset
+@implementation ZTPHAsset
 
 @end
-#pragma mark - ################## DAPHAssetCell
-@interface DAPHAssetCell ()
+#pragma mark - ################## ZTPHAssetCell
+@interface ZTPHAssetCell ()
 
 @end
 
-@implementation DAPHAssetCell
+@implementation ZTPHAssetCell
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -276,7 +274,7 @@
 {
     if (!_overLay) {
         _overLay = [[UIImageView alloc] initWithFrame:self.bounds];
-        _overLay.image = [UIImage imageNamed:@"mmphoto_overlay"];
+        _overLay.image = [UIImage imageNamed:@""];
     }
     return _overLay;
 }
@@ -289,12 +287,8 @@
 
 - (void)configWithAsset:(PHAsset *)asset isCover:(BOOL)isCover {
     @weakify(self);
-//    [DAPhotoUtil getImageWithAsset:asset size:self.bounds.size completion:^(UIImage * _Nonnull image) {
-//        @strongify(self);
-//        self.imageView.image = image;
-//    }];
     if (!isCover) {
-        [DAPhotoUtil getImageWithAsset:asset completion:^(NSData * _Nonnull imageData) {
+        [ZTPhotoUtil getImageWithAsset:asset completion:^(NSData * _Nonnull imageData) {
             @strongify(self);
             UIImage *image = [[UIImage alloc]initWithData:imageData];
             
@@ -313,7 +307,7 @@
             CGFloat kMargin = 3;
             CGFloat itemWidth = (ZTSCREENW - (numInLine + 1) * kMargin) / numInLine;
 
-            [DAPhotoUtil getImageWithAsset:asset size:CGSizeMake(itemWidth, itemWidth) completion:^(UIImage * _Nonnull image) {
+            [ZTPhotoUtil getImageWithAsset:asset size:CGSizeMake(itemWidth, itemWidth) completion:^(UIImage * _Nonnull image) {
                 @strongify(self);
                 self.imageView.image = image;
                 image = nil;
@@ -323,31 +317,6 @@
         
     }
 }
-//- (UIImage *)scaleImageWithData:(NSData *)data withSize:(CGSize)size
-//                          scale:(CGFloat)scale
-//                    orientation:(UIImageOrientation)orientation {
-//
-//    CGFloat maxPixelSize = MAX(size.width, size.height);
-//    CGImageSourceRef sourceRef = CGImageSourceCreateWithData((__bridge CFDataRef)data, nil);
-//    NSDictionary *options = @{(__bridge id)kCGImageSourceCreateThumbnailFromImageAlways:(__bridge id)kCFBooleanTrue,
-//                              (__bridge id)kCGImageSourceThumbnailMaxPixelSize:[NSNumber numberWithFloat:maxPixelSize]
-//                              };
-//    CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(sourceRef, 0, (__bridge CFDictionaryRef)options);
-//    UIImage *resultImage = [UIImage imageWithCGImage:imageRef scale:scale orientation:orientation];
-//    CGImageRelease(imageRef);
-//    CFRelease(sourceRef);
-//
-//    return resultImage;
-//}
-//- (void)setAsset:(PHAsset *)asset
-//{
-//    @weakify(self);
-//    [DAPhotoUtil getImageWithAsset:asset completion:^(NSData * _Nonnull imageData) {
-//        @strongify(self);
-//        UIImage *image = [[UIImage alloc]initWithData:imageData];
-//        self.imageView.image = [self smartCompressImage:image];
-//    }];
-//}
 - (UIImage *)smartCompressImage:(UIImage *)image {
     /** 仿微信算法 **/
     int width = (int)image.size.width;

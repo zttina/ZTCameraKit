@@ -1,22 +1,22 @@
 //
-//  DAPhotoAssetVC.h
-//  TechnicianApp
+//  ZTPhotoAssetVC.h
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/23.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/23.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
-@class DAPhotoAlbums;
+@class ZTPhotoAlbums;
 
 typedef void(^SelectTheImage)(UIImage *image);
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DAPhotoAssetVC : UIViewController
+@interface ZTPhotoAssetVC : UIViewController
 
 // 所选相册
-@property (nonatomic, strong) DAPhotoAlbums *photoAlbum;
+@property (nonatomic, strong) ZTPhotoAlbums *photoAlbum;
 
 /**
  选择的图片
@@ -25,8 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - ################## DAPHAsset
-@interface DAPHAsset : NSObject
+#pragma mark - ################## ZTPHAsset
+@interface ZTPHAsset : NSObject
 
 @property (nonatomic,assign) CGFloat aspectRatio;
 
@@ -36,9 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isSelected;
 
 @end
-#pragma mark - ################## DAPHAssetCell
+#pragma mark - ################## ZTPHAssetCell
 
-@interface DAPHAssetCell : UICollectionViewCell
+@interface ZTPHAssetCell : UICollectionViewCell
 
 @property (nonatomic, strong) PHAsset * asset;
 @property (nonatomic, strong) UIImageView * imageView;

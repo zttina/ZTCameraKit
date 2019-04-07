@@ -1,22 +1,22 @@
 //
-//  DAPlayer.m
-//  TechnicianApp
+//  ZTPlayer.m
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/15.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/15.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
-#import "DAPlayer.h"
+#import "ZTPlayer.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface DAPlayer ()
+@interface ZTPlayer ()
 
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 @property (nonatomic, strong) AVPlayer *player;
 
 @end
 
-@implementation DAPlayer
+@implementation ZTPlayer
 
 - (void)dealloc
 {

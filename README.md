@@ -1,6 +1,6 @@
 # ZTCameraKit
 
-[![CI Status](https://img.shields.io/travis/hfzdeyx@163.com/ZTCameraKit.svg?style=flat)](https://travis-ci.org/hfzdeyx@163.com/ZTCameraKit)
+[![CI Status](https://img.shields.io/travis/zttina/ZTCameraKit.svg?style=flat)](https://travis-ci.org/zttina/ZTCameraKit)
 [![Version](https://img.shields.io/cocoapods/v/ZTCameraKit.svg?style=flat)](https://cocoapods.org/pods/ZTCameraKit)
 [![License](https://img.shields.io/cocoapods/l/ZTCameraKit.svg?style=flat)](https://cocoapods.org/pods/ZTCameraKit)
 [![Platform](https://img.shields.io/cocoapods/p/ZTCameraKit.svg?style=flat)](https://cocoapods.org/pods/ZTCameraKit)
@@ -22,7 +22,7 @@ pod 'ZTCameraKit'
 
 ## Author
 
-hfzdeyx@163.com, 351199191.com
+zttina, 351199191@qq.com
 
 ## License
 

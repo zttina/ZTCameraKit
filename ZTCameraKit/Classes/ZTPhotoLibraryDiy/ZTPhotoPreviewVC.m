@@ -1,15 +1,15 @@
 //
-//  DAPhotoPreviewVC.m
-//  TechnicianApp
+//  ZTPhotoPreviewVC.m
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/23.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/23.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
-#import "DAPhotoPreviewVC.h"
-#import "DAPhotoUtil.h"
+#import "ZTPhotoPreviewVC.h"
+#import "ZTPhotoUtil.h"
 #import "ZTCameraKitHeader.h"
-@interface DAPhotoPreviewVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface ZTPhotoPreviewVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic,strong) UIButton *navBackBtn;//左上角返回相册的按钮
 @property (nonatomic,strong) UIButton *confirmBtn;//右下角确定按钮
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation DAPhotoPreviewVC
+@implementation ZTPhotoPreviewVC
 
 
 - (void)viewDidLoad {
@@ -57,10 +57,15 @@
     [self.view addSubview:topView];
     topView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
     
+    NSString *bundlePath = [[NSBundle bundleForClass:NSClassFromString(@"ZTCameraKit")].resourcePath stringByAppendingPathComponent:@"ZTCameraKit.bundle"];
     
+    //    NSURL *url = [NSBundle bundleForClass:NSClassFromString(@"ZTCameraKit")].resourceURL;
+    
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+
     self.navBackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [topView addSubview:self.navBackBtn];
-    [self.navBackBtn setImage:[UIImage imageNamed:@"arrow-left"] forState:UIControlStateNormal];
+    [self.navBackBtn setImage:[UIImage imageNamed:@"arrow-left" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
     self.navBackBtn.frame = CGRectMake(10, ZT_kNavigationBarHeight - 64 + 20, 30, 30);
     [self.navBackBtn addTarget:self action:@selector(backToView) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -72,9 +77,9 @@
 - (void)confirmThesePhotos:(UIButton *)btn {
     //判断当前index
     NSInteger currentIndex = self.collectionView.contentOffset.x / ZTSCREENW;
-    DAPHAsset *asset = self.assetArray[currentIndex];
+    ZTPHAsset *asset = self.assetArray[currentIndex];
     @weakify(self);
-    [DAPhotoUtil getImageWithAsset:asset.asset completion:^(NSData *imageData) {
+    [ZTPhotoUtil getImageWithAsset:asset.asset completion:^(NSData *imageData) {
         @strongify(self);
         if (self.selectImageBlock) {
             UIImage *image = [[UIImage alloc]initWithData:imageData];
@@ -96,9 +101,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DAPHAsset * mmAsset = [self.assetArray objectAtIndex:indexPath.row];
+    ZTPHAsset * mmAsset = [self.assetArray objectAtIndex:indexPath.row];
     // 赋值
-    DAPHAssetCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    ZTPHAssetCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
 //    cell.asset = mmAsset.asset;
     [cell configWithAsset:mmAsset.asset isCover:NO];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -109,15 +114,6 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-//    //    DAPHAsset * mmAsset = [self.phAssetArray objectAtIndex:indexPath.row];
-//    //    PHAsset * asset = mmAsset.asset;
-//    DAPhotoPreviewVC *previewVC = [[DAPhotoPreviewVC alloc]init];
-//    previewVC.assetArray = self.assetArray;
-//    previewVC.currentIndex = indexPath.row;
-//    previewVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-//    previewVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    [self presentViewController:previewVC animated:YES completion:nil];
     
 }
 //MARK:懒加载
@@ -138,7 +134,7 @@
         _collectionView.dataSource = self;
         _collectionView.scrollEnabled = YES;
         _collectionView.pagingEnabled = YES;
-        [_collectionView registerClass:[DAPHAssetCell class] forCellWithReuseIdentifier:@"cell"];
+        [_collectionView registerClass:[ZTPHAssetCell class] forCellWithReuseIdentifier:@"cell"];
     }
     return _collectionView;
 }

@@ -1,9 +1,9 @@
 //
-//  DAPhotoLibraryVC.h
-//  TechnicianApp
+//  ZTPhotoLibraryVC.h
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/22.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/22.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void(^SelectTheImage)(UIImage *image);
 typedef void(^PhotoPickerDidCancel)(void);
 
-@interface DAPhotoLibraryVC : UIViewController
+@interface ZTPhotoLibraryVC : UIViewController
 
 @property (nonatomic,copy) PhotoPickerDidCancel cancelBlock;//取消block。如果有其它操作可用它
 
@@ -27,7 +27,7 @@ typedef void(^PhotoPickerDidCancel)(void);
 @end
 
 //MARK:相册
-@interface DAPhotoAlbums : NSObject
+@interface ZTPhotoAlbums : NSObject
 
 // 相册名称
 @property (nonatomic, copy) NSString * name;
@@ -40,8 +40,8 @@ typedef void(^PhotoPickerDidCancel)(void);
 
 @end
 
-#pragma mark - ################## DAPhotoAlbumCell
-@interface DAPhotoAlbumCell : UITableViewCell
+#pragma mark - ################## ZTPhotoAlbumCell
+@interface ZTPhotoAlbumCell : UITableViewCell
 
 @property (nonatomic,strong) UIImageView *iconImageView;
 @property (nonatomic,strong) UILabel *libraryNameLabel;

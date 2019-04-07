@@ -2,7 +2,7 @@
 //  ZTCameraKitHeader.h
 //  Pods
 //
-//  Created by zt on 2019/4/5.
+//  Created by zttina on 2019/4/5.
 //
 
 #ifndef ZTCameraKitHeader_h
@@ -25,5 +25,6 @@
 #define ZT_TAB_BAR_HEIGHT (ZT_Is_iPhoneX ? 83 : 49)
 // 状态栏高度
 #define ZT_kNavigationBarHeight (ZT_Is_iPhoneX ? 88 : 64)
+
 
 #endif /* ZTCameraKitHeader_h */

@@ -1,14 +1,14 @@
 //
-//  DAPhotoUtil.m
-//  TechnicianApp
+//  ZTPhotoUtil.m
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/23.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/23.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
-#import "DAPhotoUtil.h"
+#import "ZTPhotoUtil.h"
 
-@implementation DAPhotoUtil
+@implementation ZTPhotoUtil
 
 // 获取指定相册中照片
 + (NSArray<PHAsset *> *)getAllAssetWithAssetCollection:(PHAssetCollection *)assetCollection ascending:(BOOL)ascending

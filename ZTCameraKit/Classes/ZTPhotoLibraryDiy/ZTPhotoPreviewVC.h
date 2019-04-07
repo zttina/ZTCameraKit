@@ -1,20 +1,20 @@
 //
-//  DAPhotoPreviewVC.h
-//  TechnicianApp
+//  ZTPhotoPreviewVC.h
+//  ZTCameraKit
 //
-//  Created by zt on 2019/3/23.
-//  Copyright © 2019年 Captain. All rights reserved.
+//  Created by zttina on 2019/3/23.
+//  Copyright © 2019年 zttina. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "DAPhotoAssetVC.h"
+#import "ZTPhotoAssetVC.h"
 
 typedef void(^SelectTheImage)(UIImage *image);
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DAPhotoPreviewVC : UIViewController
+@interface ZTPhotoPreviewVC : UIViewController
 
-@property (nonatomic, strong) NSMutableArray<DAPHAsset *> * assetArray;
+@property (nonatomic, strong) NSMutableArray<ZTPHAsset *> * assetArray;
 @property (nonatomic,assign) NSInteger currentIndex;
 
 
